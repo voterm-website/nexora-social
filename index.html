@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#11152d">
+<title>NEXORA — Connect Beyond Boundaries</title>
+
+<style>
+:root {
+  --navy: #11152d;
+  --blue: #246bfe;
+  --purple: #873dff;
+  --light: #f4f6fb;
+  --text: #20243a;
+  --muted: #737b91;
+  --border: #e7eaf2;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--light);
+  color: var(--text);
+}
+button, input, textarea { font: inherit; }
+button { cursor: pointer; }
+.topbar {
+  background: var(--navy);
+  color: white;
+  padding: 15px 18px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  box-shadow: 0 3px 15px #10152d22;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 23px;
+  font-weight: 850;
+  letter-spacing: 1px;
+}
+.logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-size: 25px;
+  background: linear-gradient(135deg,#05d9f5,#4e70ff,#ed49e8);
+}
+.search {
+  min-width: 0;
+  width: 43%;
+  border: 1px solid #ffffff28;
+  border-radius: 22px;
+  padding: 10px 13px;
+  color: white;
+  background: #ffffff13;
+  outline: none;
+}
+.search::placeholder { color: #c2c7dc; }
+.avatar {
+  display: inline-grid;
+  place-items: center;
+  width: 39px;
+  height: 39px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#2ecaf5,#a04bff);
+  color: white;
+  font-weight: 800;
+}
+.layout {
+  max-width: 1120px;
+  margin: 20px auto;
+  padding: 0 14px 85px;
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr) 230px;
+  gap: 18px;
+  align-items: start;
+}
+.panel, .card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  margin-bottom: 15px;
+  overflow: hidden;
+}
+.side { padding: 16px; }
+.side h3 { margin: 3px 0 15px; }
+.navitem {
+  display: flex;
+  gap: 11px;
+  align-items: center;
+  padding: 12px 8px;
+  border-radius: 11px;
+  margin: 3px 0;
+  font-weight: 650;
+  color: #525b73;
+  cursor: pointer;
+}
+.navitem.active, .navitem:hover {
+  color: var(--blue);
+  background: #edf3ff;
+}
+.hero {
+  background: linear-gradient(125deg,#11152d,#28205d,#246bfe);
+  color: white;
+  padding: 22px;
+  border-radius: 18px;
+  margin-bottom: 16px;
+}
+.hero h1 { font-size: 25px; margin: 0 0 7px; }
+.hero p { line-height: 1.5; color: #e2e6ff; margin: 0 0 15px; }
+.pill {
+  display: inline-block;
+  background: linear-gradient(100deg,#0bcff1,#8d48ff,#ed49e8);
+  padding: 9px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 800;
+}
+.section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 2px 12px;
+}
+.section-title h2 { margin: 0; font-size: 18px; }
+.stories {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 14px;
+}
+.story {
+  min-width: 77px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 650;
+}
+.storyring {
+  width: 61px;
+  height: 61px;
+  margin: 0 auto 7px;
+  padding: 3px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#05d9f5,#873dff,#ed49e8);
+}
+.storyring .avatar { width: 100%; height: 100%; font-size: 19px; }
+.create { padding: 15px; }
+.create-top {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.create textarea {
+  width: 100%;
+  min-height: 65px;
+  resize: vertical;
+  border: 0;
+  outline: none;
+  padding: 10px 0;
+  background: transparent;
+}
+.create-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+}
+.btn {
+  border: 0;
+  border-radius: 10px;
+  padding: 10px 13px;
+  background: #edf2ff;
+  color: #315bd2;
+  font-weight: 750;
+}
+.btn.primary {
+  background: linear-gradient(110deg,var(--blue),var(--purple));
+  color: white;
+}
+.push { margin-left: auto; }
+.post { padding: 16px; }
+.posthead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.postname { font-weight: 800; }
+.time { color: var(--muted); font-size: 12px; margin-top: 3px; }
+.posttext { line-height: 1.6; margin: 14px 0; overflow-wrap: anywhere; }
+.postart {
+  min-height: 145px;
+  border-radius: 13px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 20px;
+  color: white;
+  font-size: 22px;
+  font-weight: 850;
+  background: linear-gradient(135deg,#0e214f,#246bfe,#b044ff);
+}
+.postart.pink { background: linear-gradient(135deg,#5a164f,#d9489c,#ffb36b); }
+.postart.green { background: linear-gradient(135deg,#074f50,#14a887,#a6e6a1); }
+.poststats { color: var(--muted); font-size: 13px; padding: 12px 0; }
+.postbuttons {
+  display: flex;
+  gap: 7px;
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+}
+.postbuttons button {
+  flex: 1;
+  border: 0;
+  border-radius: 9px;
+  padding: 10px 3px;
+  background: transparent;
+  color: #59637b;
+  font-weight: 700;
+}
+.postbuttons button:hover, .postbuttons button.liked {
+  background: #edf3ff;
+  color: var(--blue);
+}
+.commentbox { display: flex; gap: 8px; margin-top: 10px; }
+.commentbox input {
+  min-width: 0;
+  flex: 1;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 10px 12px;
+  outline-color: var(--blue);
+}
+.comment { background: #f1f3f8; border-radius: 12px; padding: 9px 12px; margin-top: 8px; font-size: 14px; }
+.small { font-size: 13px; color: var(--muted); line-height: 1.5; }
+.opportunity {
+  padding: 13px 0;
+  border-bottom: 1px solid var(--border);
+}
+.opportunity:last-child { border: 0; }
+.opportunity strong { display: block; margin-bottom: 4px; }
+.footer {
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+  padding: 15px 5px;
+}
+.mobile-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  background: white;
+  border-top: 1px solid var(--border);
+  padding: 8px 2px calc(8px + env(safe-area-inset-bottom));
+  justify-content: space-around;
+}
+.mobile-nav button {
+  border: 0;
+  background: transparent;
+  color: #626c82;
+  font-size: 11px;
+  font-weight: 700;
+}
+.mobile-nav button span { display: block; font-size: 20px; margin-bottom: 3px; }
+.mobile-nav button.active { color: var(--blue); }
+.toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #151a33;
+  color: white;
+  padding: 12px 17px;
+  border-radius: 12px;
+  z-index: 30;
+  display: none;
+  max-width: 90%;
+  text-align: center;
+}
+.hidden { display: none !important; }
+
+@media(max-width:850px) {
+  .layout { grid-template-columns: 190px minmax(0,1fr); }
+  .rightcol { display: none; }
+}
+@media(max-width:600px) {
+  .topbar { padding: 12px; }
+  .brand { font-size: 20px; }
+  .search { width: 35%; padding: 9px; }
+  .layout { display: block; margin: 12px auto; padding: 0 10px 95px; }
+  .leftcol { display: none; }
+  .hero { padding: 19px; }
+  .hero h1 { font-size: 23px; }
+  .mobile-nav { display: flex; }
+  .post, .create { padding: 13px; }
+}
+</style>
+</head>
+
+<body>
+<header class="topbar">
+  <div class="brand"><div class="logo">N</div>NEXORA</div>
+  <input id="search" class="search" placeholder="Search Nexora..." aria-label="Search posts">
+  <div class="avatar">Y</div>
+</header>
+
+<div class="layout">
+  <aside class="leftcol">
+    <div class="panel side">
+      <h3>Your space</h3>
+      <div class="navitem active" data-view="home">🏠 Home feed</div>
+      <div class="navitem" data-view="friends">👥 Friends</div>
+      <div class="navitem" data-view="watch">🎬 Discover</div>
+      <div class="navitem" data-view="communities">🌍 Communities</div>
+      <div class="navitem" data-view="market">🛍️ Marketplace</div>
+      <div class="navitem" data-view="profile">👤 My profile</div>
+      <div class="navitem" data-view="earn">💎 Earn & learn</div>
+    </div>
+    <div class="panel side">
+      <strong>✨ Our promise</strong>
+      <p class="small">A safer, smarter, more meaningful social world. Connect with kindness.</p>
+    </div>
+  </aside>
+
+  <main>
+    <section class="hero">
+      <h1>Welcome to NEXORA 🌍</h1>
+      <p>People. Moments. Ideas. Communities. Opportunities. Your world, connected.</p>
+      <span class="pill">CONNECT BEYOND BOUNDARIES</span>
+    </section>
+
+    <section class="panel" id="storiesSection">
+      <div class="section-title" style="padding:14px 14px 0">
+        <h2>✨ Stories</h2><span class="small">Discover moments</span>
+      </div>
+      <div class="stories">
+        <div class="story"><div class="storyring"><div class="avatar">+</div></div>Create story</div>
+        <div class="story"><div class="storyring"><div class="avatar">S</div></div>Sophia</div>
+        <div class="story"><div class="storyring"><div class="avatar">D</div></div>Daniel</div>
+        <div class="story"><div class="storyring"><div class="avatar">A</div></div>Amara</div>
+        <div class="story"><div class="storyring"><div class="avatar">M</div></div>Michael</div>
+      </div>
+    </section>
+
+    <section class="panel create">
+      <div class="create-top">
+        <div class="avatar">Y</div>
+        <textarea id="postInput" maxlength="1000" placeholder="What would you like to share?"></textarea>
+      </div>
+      <div class="create-actions">
+        <button class="btn" id="photoButton">📷 Photo</button>
+        <input id="photoInput" type="file" accept="image/*" class="hidden">
+        <button class="btn" id="feelingButton">😊 Feeling</button>
+        <button class="btn primary push" id="publishButton">Publish post</button>
+      </div>
+      <div id="photoName" class="small"></div>
+    </section>
+
+    <div class="section-title"><h2 id="feedTitle">🌟 Your feed</h2><span class="small">Latest posts</span></div>
+    <div id="posts">
+      <article class="card post" data-search="daniel travel nature adventure world">
+        <div class="posthead"><div class="avatar">D</div><div><div class="postname">Daniel Brown 🌍</div><div class="time">2 hours ago · Public</div></div></div>
+        <p class="posttext">Exploring new places, meeting new people, and discovering opportunities. The world is beautiful! 🌎✨ Where would you love to travel?</p>
+        <div class="postart">🌄<br>EXPLORE YOUR WORLD</div>
+        <div class="poststats"><span class="likeCount">❤️ 12</span> · <span class="commentCount">3 comments</span></div>
+        <div class="postbuttons"><button class="likeButton">♡ Like</button><button class="commentButton">💬 Comment</button><button class="shareButton">↗ Share</button></div>
+        <div class="comments hidden"></div>
+        <form class="commentbox hidden"><input placeholder="Write a comment..." maxlength="300" required><button class="btn">Send</button></form>
+      </article>
+
+      <article class="card post" data-search="amara encouragement learning growth kindness">
+        <div class="posthead"><div class="avatar">A</div><div><div class="postname">Amara Okafor 💜</div><div class="time">4 hours ago · Public</div></div></div>
+        <p class="posttext">A little reminder: keep learning, keep growing, and keep showing kindness. Small steps can lead to beautiful changes. 🌱💜</p>
+        <div class="postart pink">✨<br>GROW THROUGH WHAT YOU GO THROUGH</div>
+        <div class="poststats"><span class="likeCount">❤️ 28</span> · <span class="commentCount">6 comments</span></div>
+        <div class="postbuttons"><button class="likeButton">♡ Like</button><button class="commentButton">💬 Comment</button><button class="shareButton">↗ Share</button></div>
+        <div class="comments hidden"></div>
+        <form class="commentbox hidden"><input placeholder="Write a comment..." maxlength="300" required><button class="btn">Send</button></form>
+      </article>
+
+      <article class="card post" data-search="michael technology ideas future community">
+        <div class="posthead"><div class="avatar">M</div><div><div class="postname">Michael James 🚀</div><div class="time">Yesterday · Public</div></div></div>
+        <p class="posttext">What feature would you love to see in a new social network? Let's build a more useful digital world together! 💡</p>
+        <div class="postart green">💡<br>YOUR IDEAS MATTER</div>
+        <div class="poststats"><span class="likeCount">❤️ 19</span> · <span class="commentCount">4 comments</span></div>
+        <div class="postbuttons"><button class="likeButton">♡ Like</button><button class="commentButton">💬 Comment</button><button class="shareButton">↗ Share</button></div>
+        <div class="comments hidden"></div>
+        <form class="commentbox hidden"><input placeholder="Write a comment..." maxlength="300" required><button class="btn">Send</button></form>
+      </article>
+    </div>
+
+    <div id="emptyState" class="panel side hidden">No matching posts found. Try another search.</div>
+  </main>
+
+  <aside class="rightcol">
+    <div class="panel side">
+      <h3>🌟 Discover</h3>
+      <div class="opportunity"><strong>👥 Find your people</strong><div class="small">Connect around shared interests.</div></div>
+      <div class="opportunity"><strong>🎬 Watch & learn</strong><div class="small">Explore ideas and useful skills.</div></div>
+      <div class="opportunity"><strong>🛍️ Business corner</strong><div class="small">Find products and services.</div></div>
+    </div>
+    <div class="panel side">
+      <h3>💎 Opportunities</h3>
+      <p class="small">Build skills, share useful content, and discover legitimate ways to grow your business.</p>
+      <button class="btn primary" style="width:100%" data-view="earn">Explore opportunities</button>
+    </div>
+    <div class="panel side small">
+      <strong>NEXORA</strong><br>Connect Beyond Boundaries.<br><br>
+      Privacy · Safety · Community<br>
+      © <span id="year"></span> NEXORA
+    </div>
+  </aside>
+</div>
+
+<nav class="mobile-nav">
+  <button class="active" data-view="home"><span>🏠</span>Home</button>
+  <button data-view="friends"><span>👥</span>Friends</button>
+  <button data-view="watch"><span>🎬</span>Discover</button>
+  <button data-view="market"><span>🛍️</span>Market</button>
+  <button data-view="profile"><span>👤</span>Profile</button>
+</nav>
+
+<div id="toast" class="toast" role="status"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+let chosenPhoto = null;
+let toastTimer;
+
+function toast(message) {
+  $('toast').textContent = message;
+  $('toast').style.display = 'block';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => $('toast').style.display = 'none', 2600);
+}
+
+$('year').textContent = new Date().getFullYear();
+
+$('photoButton').addEventListener('click', () => $('photoInput').click());
+
+$('photoInput').addEventListener('change', event => {
+  const file = event.target.files[0];
+  if (!file) return;
+  if (!file.type.startsWith('image/')) {
+    toast('Please choose an image.');
+    return;
+  }
+  if (file.size > 5 * 1024 * 1024) {
+    toast('Choose an image smaller than 5 MB.');
+    event.target.value = '';
+    return;
+  }
+  chosenPhoto = file;
+  $('photoName').textContent = '📷 Selected: ' + file.name;
+});
+
+$('feelingButton').addEventListener('click', () => {
+  const feelings = ['😊 feeling happy', '🙏 feeling grateful', '💪 feeling motivated', '❤️ sharing love', '🎉 celebrating'];
+  const choice = prompt('Choose a feeling:\n1. Happy\n2. Grateful\n3. Motivated\n4. Sharing love\n5. Celebrating');
+  const index = Number(choice) - 1;
+  if (index >= 0 && index < feelings.length) {
+    $('postInput').value += ($('postInput').value ? ' ' : '') + feelings[index];
+  }
+});
+
+$('publishButton').addEventListener('click', () => {
+  const text = $('postInput').value.trim();
+  if (!text && !chosenPhoto) {
+    toast('Write something or select a photo first.');
+    return;
+  }
+
+  const article = document.createElement('article');
+  article.className = 'card post';
+  article.dataset.search = text.toLowerCase();
+
+  const head = document.createElement('div');
+  head.className = 'posthead';
+  const avatar = document.createElement('div');
+  avatar.className = 'avatar';
+  avatar.textContent = 'Y';
+  const identity = document.createElement('div');
+  const name = document.createElement('div');
+  name.className = 'postname';
+  name.textContent = 'You';
+  const time = document.createElement('div');
+  time.className = 'time';
+  time.textContent = 'Just now · This device only';
+  identity.append(name, time);
+  head.append(avatar, identity);
+  article.append(head);
+
+  if (text) {
+    const paragraph = document.createElement('p');
+    paragraph.className = 'posttext';
+    paragraph.textContent = text;
+    article.append(paragraph);
+  }
+
+  if (chosenPhoto) {
+    const image = document.createElement('img');
+    image.alt = 'Image attached to your post';
+    image.style.cssText = 'display:block;width:100%;max-height:420px;object-fit:contain;border-radius:12px;margin:12px 0;background:#f4f6fb';
+    const reader = new FileReader();
+    reader.onload = e => { image.src = e.target.result; };
+    reader.readAsDataURL(chosenPhoto);
+    article.append(image);
+  }
+
+  const stats = document.createElement('div');
+  stats.className = 'poststats';
+  stats.innerHTML = '<span class="likeCount">❤️ 0</span> · <span class="commentCount">0 comments</span>';
+  article.append(stats);
+
+  const buttons = document.createElement('div');
+  buttons.className = 'postbuttons';
+  buttons.innerHTML = '<button class="likeButton">♡ Like</button><button class="commentButton">💬 Comment</button><button class="shareButton">↗ Share</button>';
+  article.append(buttons);
+
+  const comments = document.createElement('div');
+  comments.className = 'comments hidden';
+  const form = document.createElement('form');
+  form.className = 'commentbox hidden';
+  form.innerHTML = '<input placeholder="Write a comment..." maxlength="300" required><button class="btn">Send</button>';
+  article.append(comments, form);
+
+  $('posts').prepend(article);
+  $('postInput').value = '';
+  $('photoInput').value = '';
+  $('photoName').textContent = '';
+  chosenPhoto = null;
+  bindPost(article);
+  toast('Your post was added on this device.');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+});
+
+function bindPost(post) {
+  const like = post.querySelector('.likeButton');
+  like.addEventListener('click', () => {
+    const liked = like.classList.toggle('liked');
+    like.textContent = liked ? '♥ Liked' : '♡ Like';
+    const count = post.querySelector('.likeCount');
+    const number = Number(count.dataset.count || count.textContent.match(/\d+/)?.[0] || 0);
+    const updated = number + (liked ? 1 : -1);
+    count.dataset.count = updated;
+    count.textContent = '❤️ ' + updated;
+  });
+
+  const commentButton = post.querySelector('.commentButton');
+  const form = post.querySelector('.commentbox');
+  const comments = post.querySelector('.comments');
+  commentButton.addEventListener('click', () => {
+    form.classList.toggle('hidden');
+    comments.classList.remove('hidden');
+    if (!form.classList.contains('hidden')) form.querySelector('input').focus();
+  });
+
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    const input = form.querySelector('input');
+    const value = input.value.trim();
+    if (!value) return;
+    const comment = document.createElement('div');
+    comment.className = 'comment';
+    const strong = document.createElement('strong');
+    strong.textContent = 'You: ';
+    comment.append(strong, document.createTextNode(value));
+    comments.append(comment);
+    comments.classList.remove('hidden');
+    input.value = '';
+    const count = post.querySelector('.commentCount');
+    const number = Number(count.dataset.count || count.textContent.match(/\d+/)?.[0] || 0) + 1;
+    count.dataset.count = number;
+    count.textContent = number + ' comments';
+  });
+
+  post.querySelector('.shareButton').addEventListener('click', async () => {
+    const text = post.querySelector('.posttext')?.textContent || 'A post on NEXORA';
+    if (navigator.share) {
+      try { await navigator.share({title:'NEXORA', text}); }
+      catch (error) {}
+    } else if (navigator.clipboard) {
+      try { await navigator.clipboard.writeText(text); toast('Post text copied to clipboard.'); }
+      catch (error) { toast('Sharing is not available in this preview.'); }
+    } else {
+      toast('Sharing is not available in this preview.');
+    }
+  });
+}
+
+document.querySelectorAll('.post').forEach(bindPost);
+
+$('search').addEventListener('input', () => {
+  const query = $('search').value.toLowerCase().trim();
+  let visible = 0;
+  document.querySelectorAll('#posts .post').forEach(post => {
+    const matches = !query || (post.innerText + ' ' + post.dataset.search).toLowerCase().includes(query);
+    post.classList.toggle('hidden', !matches);
+    if (matches) visible++;
+  });
+  $('emptyState').classList.toggle('hidden', visible !== 0);
+});
+
+document.querySelectorAll('[data-view]').forEach(item => {
+  item.addEventListener('click', () => {
+    const view = item.dataset.view;
+    document.querySelectorAll('[data-view]').forEach(el => el.classList.toggle('active', el.dataset.view === view));
+    const titles = {
+      home: '🌟 Your feed',
+      friends: '👥 Friends',
+      watch: '🎬 Discover',
+      communities: '🌍 Communities',
+      market: '🛍️ Marketplace',
+      profile: '👤 My profile',
+      earn: '💎 Earn & learn'
+    };
+    $('feedTitle').textContent = titles[view] || '🌟 Your feed';
+    if (view !== 'home') {
+      toast(titles[view] + ' will be developed in the next phase.');
+    }
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
+});
+</script>
+</body>
+</html>
