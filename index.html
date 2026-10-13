@@ -636,5 +636,30 @@ document.querySelectorAll('[data-view]').forEach(item => {
   });
 });
 </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const nexoraSupabase = window.supabase.createClient(
+  'https://sb_publishable_Y3poaQ0as9d6DBaJxpgJTQ_PJlNfs2y',
+  'PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE'
+);
+
+document.getElementById('facebook-login').addEventListener('click', async function () {
+  this.disabled = true;
+  this.textContent = 'Connecting to Facebook...';
+
+  const { error } = await nexoraSupabase.auth.signInWithOAuth({
+    provider: 'facebook',
+    options: {
+      redirectTo: 'https://voterm-website.github.io/nexora-social/'
+    }
+  });
+
+  if (error) {
+    alert('Facebook login failed: ' + error.message);
+    this.disabled = false;
+    this.textContent = 'Continue with Facebook';
+  }
+});
+</script>
 </body>
 </html>
