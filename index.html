@@ -343,11 +343,45 @@ button { cursor: pointer; }
       <span class="pill">CONNECT BEYOND BOUNDARIES</span>
     </section>
 
-    <div id="facebook-login-box" style="text-align:center;padding:15px;margin:12px 0;background:white;border-radius:16px;">
-  <button id="facebook-login" style="background:#1877F2;color:white;padding:12px 20px;border:0;border-radius:8px;font-size:16px;font-weight:bold;">
-    Continue with Facebook
+    <section class="panel side" id="authPanel">
+  <h2>Join NEXORA 🌍</h2>
+  <p class="small">Create your account or sign in.</p>
+
+  <label for="authName">Your name</label>
+  <input id="authName"
+         type="text"
+         placeholder="Enter your name"
+         style="width:100%;padding:12px;margin:8px 0">
+
+  <label for="authEmail">Email address</label>
+  <input id="authEmail"
+         type="email"
+         placeholder="Enter your email"
+         style="width:100%;padding:12px;margin:8px 0">
+
+  <label for="authPassword">Password</label>
+  <input id="authPassword"
+         type="password"
+         minlength="6"
+         placeholder="At least 6 characters"
+         style="width:100%;padding:12px;margin:8px 0">
+
+  <button class="btn primary" id="signUpButton">
+    Create Account
   </button>
-    </div>
+
+  <button class="btn" id="signInButton">
+    Sign In
+  </button>
+
+  <button class="btn hidden" id="signOutButton">
+    Sign Out
+  </button>
+
+  <p id="authStatus" class="small">
+    Welcome to NEXORA!
+  </p>
+</section>
     <section class="panel" id="storiesSection">
       <div class="section-title" style="padding:14px 14px 0">
         <h2>✨ Stories</h2><span class="small">Discover moments</span>
